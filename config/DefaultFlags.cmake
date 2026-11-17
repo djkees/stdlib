@@ -15,9 +15,17 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
     "-std=f2018"
   )
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
-  set(
-    CMAKE_Fortran_FLAGS_INIT
-  )
+  if(WIN32)
+    # use the DLL C runtime, matching the /MD used for the C sources
+    set(
+      CMAKE_Fortran_FLAGS_INIT
+      "/libs:dll"
+    )
+  else()
+    set(
+      CMAKE_Fortran_FLAGS_INIT
+    )
+  endif()
   set(
     CMAKE_Fortran_FLAGS_RELEASE_INIT
   )
